@@ -72,6 +72,7 @@ form {
   width: 100%;
 }
 
-.errorMessage {
+.errorMessage,
+.mandatory {
   color: red;
 }

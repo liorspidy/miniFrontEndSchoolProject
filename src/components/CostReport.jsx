@@ -77,7 +77,7 @@ const CostReport = ({ categories, costs }) => {
               <li>
                 Date: &nbsp;
                 <span className={classes.valueStyle}>
-                  {new Date(cost.date).toLocaleDateString()}
+                  {new Date(cost.date).toLocaleDateString("en-GB")}
                 </span>
               </li>
               <li>

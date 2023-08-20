@@ -12,8 +12,8 @@ const CostForm = ({ onAddCost, categories }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!sum || !category || !description || !date) {
-      setError("Please fill in all fields");
+    if (!sum || !category || !description) {
+      setError("Please fill in all mandatory fields");
       return;
     }
 
@@ -23,7 +23,9 @@ const CostForm = ({ onAddCost, categories }) => {
       sum: parseFloat(sum),
       category,
       description,
-      date: new Date(date).toISOString(),
+      date: date
+        ? new Date(date).toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0],
     };
 
     try {
@@ -47,7 +49,9 @@ const CostForm = ({ onAddCost, categories }) => {
       <h2>Add New Cost Item</h2>
       <form onSubmit={handleSubmit}>
         <div className={classes.inputBox}>
-          <label className={classes.formLabel}>Sum:</label>
+          <label className={classes.formLabel}>
+            <span className={classes.mandatory}>* </span>Sum:
+          </label>
           <input
             className={classes.formInput}
             type="number"
@@ -56,7 +60,9 @@ const CostForm = ({ onAddCost, categories }) => {
           />
         </div>
         <div className={classes.inputBox}>
-          <label className={classes.formLabel}>Category:</label>
+          <label className={classes.formLabel}>
+            <span className={classes.mandatory}>* </span>Category:
+          </label>
           <select
             className={classes.formSelect}
             value={category}
@@ -73,7 +79,9 @@ const CostForm = ({ onAddCost, categories }) => {
           </select>
         </div>
         <div className={classes.inputBox}>
-          <label className={classes.formLabel}>Description:</label>
+          <label className={classes.formLabel}>
+            <span className={classes.mandatory}>* </span>Description:
+          </label>
           <textarea
             className={classes.textareaInput}
             value={description}
