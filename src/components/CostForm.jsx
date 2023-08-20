@@ -7,13 +7,17 @@ const CostForm = ({ onAddCost, categories }) => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!sum || !category || !description || !date) {
+      setError("Please fill in all fields");
       return;
     }
+
+    setError(""); // Clear the error message
 
     const newCost = {
       sum: parseFloat(sum),
@@ -83,6 +87,7 @@ const CostForm = ({ onAddCost, categories }) => {
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
+          {error && <p className={classes.errorMessage}>{error}</p>}
         </div>
 
         <button className={classes.formButton} type="submit">

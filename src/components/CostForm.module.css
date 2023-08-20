@@ -54,3 +54,7 @@ form {
   gap: 0.5rem;
   width: 100%;
 }
+
+.errorMessage {
+  color: red;
+}

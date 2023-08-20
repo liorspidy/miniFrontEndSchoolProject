@@ -71,11 +71,11 @@ const CostReport = ({ categories, costs }) => {
                 Sum: <span className={classes.valueStyle}>{cost.sum}</span>
               </li>
               <li>
-                Category:
+                Category:&nbsp;
                 <span className={classes.valueStyle}>{cost.category}</span>
               </li>
               <li>
-                Date:
+                Date: &nbsp;
                 <span className={classes.valueStyle}>
                   {new Date(cost.date).toLocaleDateString()}
                 </span>
