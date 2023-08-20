@@ -17,7 +17,7 @@ const CostForm = ({ onAddCost, categories }) => {
       return;
     }
 
-    setError(""); // Clear the error message
+    setError("");
 
     const newCost = {
       sum: parseFloat(sum),
@@ -31,6 +31,7 @@ const CostForm = ({ onAddCost, categories }) => {
 
       if (result === "Cost added successfully") {
         onAddCost(newCost);
+        console.log(result);
         setSum("");
         setCategory("");
         setDescription("");

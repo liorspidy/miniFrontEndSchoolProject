@@ -6,6 +6,23 @@
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   width: 60%;
   background-color: #00adb5;
+  transition: transform 0.5s;
+}
+
+@keyframes addedAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.addedAnimation {
+  animation: addedAnimation 2s;
 }
 
 form {
