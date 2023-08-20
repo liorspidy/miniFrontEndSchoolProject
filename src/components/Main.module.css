@@ -1,0 +1,33 @@
+.main {
+  text-align: center;
+}
+
+.title1 {
+  font-size: 1rem;
+}
+
+.title2 {
+  font-size: 2rem;
+}
+
+.mainContainer {
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainTitle {
+  margin-bottom: 20px;
+}
+
+.appField {
+  display: flex;
+  gap: 2rem;
+  width: 90%;
+  align-items: flex-start;
+  justify-content: center;
+}
