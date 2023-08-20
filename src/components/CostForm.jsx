@@ -23,17 +23,15 @@ const CostForm = ({ onAddCost, categories }) => {
     };
 
     try {
-      const db = await idb.openDB("costsdb", 1);
-      const transaction = db.transaction("costs", "readwrite");
-      const costStore = transaction.objectStore("costs");
-      await costStore.add(newCost);
+      const result = await idb.addCost(newCost);
 
-      onAddCost(newCost);
-
-      setSum("");
-      setCategory("");
-      setDescription("");
-      setDate("");
+      if (result === "Cost added successfully") {
+        onAddCost(newCost);
+        setSum("");
+        setCategory("");
+        setDescription("");
+        setDate("");
+      }
     } catch (error) {
       console.error("Error adding cost to IndexedDB:", error);
     }
