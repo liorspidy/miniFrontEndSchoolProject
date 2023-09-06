@@ -1,53 +1,63 @@
-import React, { useState } from "react";
-import classes from "./CostForm.module.css";
-import idb from "../utils/idb";
+import { useState } from 'react';
+import classes from './CostForm.module.css';
+import idb from '../idb';
 
+// Define the CostForm component
 const CostForm = ({ onAddCost, categories }) => {
-  const [sum, setSum] = useState("");
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [error, setError] = useState("");
+  // Define state variables for form inputs and error handling
+  const [sum, setSum] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [error, setError] = useState('');
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Validate form inputs
     if (!sum || !category || !description) {
-      setError("Please fill in all mandatory fields");
+      setError('Please fill in all mandatory fields');
       return;
     }
 
-    setError("");
+    setError('');
 
+    // Get the current date in ISO format
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    // Create a new cost object with user input
     const newCost = {
       sum: parseFloat(sum),
       category,
       description,
-      date: date
-        ? new Date(date).toISOString().split("T")[0]
-        : new Date().toISOString().split("T")[0],
+      date: date ? new Date(date).toISOString().split('T')[0] : currentDate,
     };
 
     try {
-      const result = await idb.addCost(newCost);
+      // Open IndexedDB and add the new cost
+      const db = await idb.openCostsDB('costsdb', 1);
+      const result = await db.addCost(newCost);
 
-      if (result === "Cost added successfully") {
+      // If adding the cost was successful, reset form inputs
+      if (result) {
         onAddCost(newCost);
-        console.log(result);
-        setSum("");
-        setCategory("");
-        setDescription("");
-        setDate("");
+        setSum('');
+        setCategory('');
+        setDescription('');
+        setDate('');
       }
     } catch (error) {
-      console.error("Error adding cost to IndexedDB:", error);
+      console.error('Error adding cost to IndexedDB:', error);
     }
   };
 
+  // Render the CostForm component
   return (
     <div className={classes.formContainer}>
       <h2>Add New Cost Item</h2>
       <form onSubmit={handleSubmit}>
+        {/* Input field for the cost sum */}
         <div className={classes.inputBox}>
           <label className={classes.formLabel}>
             <span className={classes.mandatory}>* </span>Sum:
@@ -59,6 +69,8 @@ const CostForm = ({ onAddCost, categories }) => {
             onChange={(e) => setSum(e.target.value)}
           />
         </div>
+
+        {/* Dropdown for selecting the cost category */}
         <div className={classes.inputBox}>
           <label className={classes.formLabel}>
             <span className={classes.mandatory}>* </span>Category:
@@ -78,6 +90,8 @@ const CostForm = ({ onAddCost, categories }) => {
             ))}
           </select>
         </div>
+
+        {/* Textarea for entering cost description */}
         <div className={classes.inputBox}>
           <label className={classes.formLabel}>
             <span className={classes.mandatory}>* </span>Description:
@@ -88,6 +102,8 @@ const CostForm = ({ onAddCost, categories }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
+
+        {/* Input field for selecting the cost date */}
         <div className={classes.inputBox}>
           <label className={classes.formLabel}>Date:</label>
           <input
@@ -96,9 +112,11 @@ const CostForm = ({ onAddCost, categories }) => {
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
+          {/* Display error message if there is an error */}
           {error && <p className={classes.errorMessage}>{error}</p>}
         </div>
 
+        {/* Submit button */}
         <button className={classes.formButton} type="submit">
           Add Cost
         </button>
