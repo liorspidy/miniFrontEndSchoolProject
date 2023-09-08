@@ -56,7 +56,7 @@ const idb = {
   },
 };
 
-// Export the idb object (for Node.js, if applicable)
+// Export the idb object
 if (typeof module !== 'undefined') {
   module.exports = idb;
 }
