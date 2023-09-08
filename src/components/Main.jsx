@@ -1,3 +1,8 @@
+/*
+Daniel Gardashnik 206389363
+Lior Fridman 206798902
+*/
+
 import { useState, useEffect } from 'react';
 import classes from './Main.module.css';
 import CostForm from './CostForm';

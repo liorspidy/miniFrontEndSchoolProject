@@ -1,3 +1,8 @@
+/*
+Daniel Gardashnik 206389363
+Lior Fridman 206798902
+*/
+
 const idb = {
   // Asynchronously opens or creates an IndexedDB database
   async openCostsDB(databaseName, databaseVersion) {
