@@ -4,6 +4,16 @@ Lior Fridman 206798902
 */
 
 const idb = {
+  // Enum for valid categories
+  VALID_CATEGORIES: [
+    'FOOD',
+    'HEALTH',
+    'EDUCATION',
+    'TRAVEL',
+    'HOUSING',
+    'OTHER',
+  ],
+
   // Asynchronously opens or creates an IndexedDB database
   async openCostsDB(databaseName, databaseVersion) {
     return new Promise((resolve, reject) => {
@@ -41,6 +51,33 @@ const idb = {
   // Asynchronously adds a new cost item to the database
   async addCost(db, costData) {
     return new Promise((resolve, reject) => {
+      // Validate the costData object
+      if (
+        !costData ||
+        typeof costData !== 'object' ||
+        !(
+          'sum' in costData &&
+          (typeof costData.sum === 'number' || typeof costData.sum === 'string')
+        ) ||
+        !(
+          'category' in costData &&
+          idb.VALID_CATEGORIES.includes(costData.category)
+        ) ||
+        !(
+          'description' in costData && typeof costData.description === 'string'
+        ) ||
+        Object.keys(costData).some(
+          (key) =>
+            key !== 'sum' &&
+            key !== 'category' &&
+            key !== 'description' &&
+            key !== 'date'
+        )
+      ) {
+        reject(new Error('Invalid costData object'));
+        return;
+      }
+
       // Start a read-write transaction for the 'costs' object store
       const transaction = db.transaction('costs', 'readwrite');
       const store = transaction.objectStore('costs');
